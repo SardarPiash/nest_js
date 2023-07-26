@@ -9,7 +9,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(
     session({
-      secret: 'your-secret-key', 
+      secret: 'locked', 
       resave: false,
       saveUninitialized: false,
     }),

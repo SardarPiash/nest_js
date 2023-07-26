@@ -89,6 +89,37 @@ export class AdminService{
         }
       }
 
+      ///see unapproved member................
+      async getUnapprovedUsers(): Promise<UserEntity[]> {
+        const users = await this.userRepo.find({ where: { approval: null } });
+
+        if (users !== null) {
+          const customers: UserEntity[] = [];
+      
+          for (const user of users) {
+            if (user.approval === null || user.approval =="Blocked") {
+              const customer = new UserEntity();
+              customer.name = user.name;
+              customer.email = user.email;
+              customer.nid = user.nid;
+              customer.phone = user.phone;
+              customer.address = user.address;
+              customer.status = user.status;
+              customer.approval=user.approval;
+      
+              customers.push(customer);
+            }
+          }
+      
+          return customers;
+        }
+      
+        return [];
+        
+        //return unapprovedUsers;
+      }
+    
+
 
       //*************Approved new member************* */
       async approvedNewMember(approved_Dto: approve_Dto, name: string): Promise<string> {

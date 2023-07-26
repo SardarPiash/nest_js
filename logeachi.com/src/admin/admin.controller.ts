@@ -8,6 +8,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import {deleteuser_Dto} from 'src/admin/deleteuser.dto';
 import {approve_Dto} from 'src/admin/approve_member.dto';
 import { changePassword_Dto } from "./changePassword.dto";
+import { UserEntity } from "./admin.eneity";
 
 @Controller('admin')
 export class AdminController {
@@ -62,6 +63,16 @@ export class AdminController {
       return "Loged as an Admin";
     }
   }
+
+  //see approve request ..............
+  @Get('/unapproved')
+  async getUnapprovedUsers(@Session() session: Record<string, any>): Promise<any> {
+    if(session.status =="admin"){
+    return this.adminservice.getUnapprovedUsers();
+  }else{
+    return "Loged as an Admin";
+  }
+}
 
 ///Approved new member................
 
